@@ -1,0 +1,12 @@
+type User {
+  id: String!
+  email: String!
+}
+
+type Query {
+  getUser(email: String!): User!
+}
+
+type Subscription {
+  sayHey: String
+}

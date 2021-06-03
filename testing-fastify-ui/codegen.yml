@@ -1,0 +1,26 @@
+require:
+  - ts-node/register
+overwrite: true
+# schema: "./graphql/typeDefs.ts"
+schema: 'http://localhost:5000/graphql'
+# documents: "./client/src/graphql/**/**.graphql"
+documents: "./src/graphql/**/**.graphql"
+generates:
+  # ./codeGenBE/index.ts:
+  #   plugins:
+  #     - "typescript"
+  #     - "typescript-operations"
+  #     - "typescript-resolvers"
+  #     - "typescript-mongodb"
+  #     - "fragment-matcher"
+  #     - "typescript-document-nodes"
+  # ./client/src/codeGenFE/index.ts:
+  ./src/codeGenFE/index.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher:
+        func: "../utils/customFetcher#fetcher"
+        isReactHook: true
