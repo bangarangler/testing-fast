@@ -20,8 +20,8 @@ export const __prod_cors__ =
     : {
         origin: [
           "https://studio.apollographql.com",
-          "https://nodereacttesting.nowigence.ai",
-          "wss://nodereacttesting.nowigence.ai",
+          "https://hydra.nowigence.ai",
+          "wss://hydra.nowigence.ai",
         ],
         credentials: true,
       };
@@ -72,4 +72,4 @@ export const log = {
 };
 
 export const URL =
-  process.env.NODE_ENV !== "production" ? "localhost" : "produrl";
+  process.env.NODE_ENV !== "production" ? "localhost" : "hydra.nowigence.ai";

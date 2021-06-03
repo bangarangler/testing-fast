@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "tsc && node server.ts",
+    "start": "tsc && node dist/serverProd.js",
     "dev": "nodemon server.ts",
     "gen": "graphql-codegen --config codegen.yml",
     "gen-env": "npx gen-env-types .env -o ./.env.d.ts -e ."
@@ -23,6 +23,7 @@
     "fastify-cors": "^6.0.1",
     "fastify-csrf": "^3.1.0",
     "fastify-helmet": "^5.3.1",
+    "fastify-https-redirect": "^1.0.3",
     "fastify-log": "^1.2.1",
     "fastify-mongodb": "^2.0.1",
     "graphql": "^15.5.0",
@@ -43,6 +44,7 @@
     "@graphql-codegen/typescript-react-query": "^1.3.1",
     "@graphql-codegen/typescript-resolvers": "^1.19.2",
     "@types/ioredis": "^4.26.4",
+    "@types/mongodb": "^3.6.17",
     "@types/node": "^15.6.1",
     "gen-env-types": "^1.3.0",
     "nodemon": "^2.0.7",

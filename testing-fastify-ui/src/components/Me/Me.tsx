@@ -9,14 +9,14 @@ const Me = () => {
     { email: "hank@hank.com" },
     {
       onSuccess: () => {
-        console.log("onSuccess");
-        setCount(count + 1);
+        // console.log("onSuccess");
+        // setCount(count + 1);
       },
     }
   );
 
   useEffect(() => {
-    console.log("update", count);
+    console.log("HERE:: count", count);
   }, [count]);
   console.log("data fro mme", data);
   console.log("err from me", error);

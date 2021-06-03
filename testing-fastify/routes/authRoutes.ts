@@ -1,4 +1,4 @@
-import { fastify, log } from "../constants";
+import { fastify, log, URL } from "../constants";
 // Auth Routes
 export default async function authRoutes(fastify: any, opts: any) {
   const db = fastify.mongo.db;
@@ -22,7 +22,7 @@ export default async function authRoutes(fastify: any, opts: any) {
       .status(200)
       .setCookie("fastify-test", fakeToken, {
         path: "/",
-        domain: "localhost",
+        domain: URL,
         httpOnly: true,
         secure: true,
         expires: refreshExp,
@@ -50,7 +50,7 @@ export default async function authRoutes(fastify: any, opts: any) {
         .status(200)
         .setCookie("fastify-test", fakeToken, {
           path: "/",
-          domain: "localhost",
+          domain: URL,
           httpOnly: true,
           secure: true,
           expires: refreshExp,

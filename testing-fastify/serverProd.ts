@@ -4,6 +4,8 @@ import { fastify, log, URL } from "./constants";
 import autoLoad from "fastify-autoload";
 // import { fileURLToPath } from "url";
 import { join } from "path";
+import http from "http";
+import https from "https";
 // import { Server, IncomingMessage, ServerResponse } from "http";
 import { ApolloServer } from "apollo-server-fastify";
 import { typeDefs } from "./graphql/typeDefs";
@@ -78,22 +80,39 @@ const start = async () => {
       },
     });
     // await server.applyMiddleware({app, cors: false})
+    // ======== new ======= //
     await server.start();
     const httpServer = await fastify.register(
       server.createHandler({ cors: false })
     );
+    // const httpsServer = await fastify.register(
+    //   server.createHandler({ cors: false })
+    //   );
+    // ======== old ======= //
+    // const httpServer = await fastify.register(
+    //   server.createHandler({ cors: false })
+    // );
+    // ======== end ======= //
     if (!httpServer) throw "No HTTP SERVER";
     server.installSubscriptionHandlers(httpServer);
     // await fastify.listen(process.env.PORT || 5000);
     // @ts-ignore
-    await httpServer.listen(process.env.PORT || 5000, () => {
+    await httpServer.listen(process.env.HTTP_PORT || 5000, () => {
       console.log(
-        `Subscription ready at ws://${URL}:${process.env.PORT_DEV}${server.subscriptionsPath}`
+        `Subscription ready at ws://${URL}:${process.env.HTTP_PORT}${server.subscriptionsPath}`
       );
       console.log(
-        `Server ready at http://${URL}:${process.env.PORT_DEV}${server.graphqlPath}`
+        `Server ready at http://${URL}:${process.env.HTTP_PORT}${server.graphqlPath}`
       );
     });
+    // await httpsServer.listen(process.env.HTTPS_PORT || 5000, () => {
+    //   console.log(
+    //     `Subscription ready at ws://${URL}:${process.env.HTTPS_PORT}${server.subscriptionsPath}`
+    //   );
+    //   console.log(
+    //     `Server ready at http://${URL}:${process.env.HTTPS_PORT}${server.graphqlPath}`
+    //   );
+    // });
 
     const address = fastify.server.address();
     const port = typeof address === "string" ? address : address?.port;
