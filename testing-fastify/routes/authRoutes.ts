@@ -4,7 +4,7 @@ export default async function authRoutes(fastify: any, opts: any) {
   const db = fastify.mongo.db;
   // fastify.addHook("onRequest", fastify.authorize);
 
-  fastify.post("/register", {}, async (request: any, reply: any) => {
+  fastify.post("/api/register", {}, async (request: any, reply: any) => {
     // console.log("request :>> ", request);
     // console.log("request.cookies :>> ", request?.cookies);
     const { email, password } = request?.body;
@@ -21,7 +21,7 @@ export default async function authRoutes(fastify: any, opts: any) {
     reply
       .status(200)
       .setCookie("fastify-test", fakeToken, {
-        path: "/",
+        path: URL,
         domain: URL,
         httpOnly: true,
         secure: true,
@@ -31,7 +31,7 @@ export default async function authRoutes(fastify: any, opts: any) {
     // return { message: "register route hit" };
   });
 
-  fastify.post("/login", {}, async (request: any, reply: any) => {
+  fastify.post("/api/login", {}, async (request: any, reply: any) => {
     console.log("request :>> ", request);
     // console.log("request.cookies :>> ", request?.cookies);
 
@@ -49,7 +49,7 @@ export default async function authRoutes(fastify: any, opts: any) {
       reply
         .status(200)
         .setCookie("fastify-test", fakeToken, {
-          path: "/",
+          path: URL,
           domain: URL,
           httpOnly: true,
           secure: true,

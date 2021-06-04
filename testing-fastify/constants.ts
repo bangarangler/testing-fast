@@ -10,9 +10,9 @@ export const __prod_cors__ =
     ? {
         origin: [
           "http://localhost:3000",
-          "http://localhost:5000",
-          "http://localhost:5000/graphql",
-          "ws://localhost:5000/graphql",
+          "http://localhost:5000/api",
+          "http://localhost:5000/api/graphql",
+          "ws://localhost:5000/api/graphql",
           "https://studio.apollographql.com",
         ],
         credentials: true,
@@ -20,8 +20,8 @@ export const __prod_cors__ =
     : {
         origin: [
           "https://studio.apollographql.com",
-          "https://hydra.nowigence.ai",
-          "wss://hydra.nowigence.ai",
+          "https://hydra.nowigence.ai/api",
+          "wss://hydra.nowigence.ai/api",
         ],
         credentials: true,
       };
@@ -72,6 +72,4 @@ export const log = {
 };
 
 export const URL =
-  process.env.NODE_ENV !== "production"
-    ? "localhost/api"
-    : "hydra.nowigence.ai/api";
+  process.env.NODE_ENV !== "production" ? "localhost" : "hydra.nowigence.ai";

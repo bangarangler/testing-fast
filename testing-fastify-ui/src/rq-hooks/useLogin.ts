@@ -13,6 +13,8 @@ export function useLogin(options: any) {
 
   return useMutation(async (loginInput: LoginInput) => {
     try {
+      console.log("REST_BASE_ENDPOINT", REST_BASE_ENDPOINT);
+      console.log("post", `${REST_BASE_ENDPOINT}/login`);
       const { data } = await axios.post(
         `${REST_BASE_ENDPOINT}/login`,
         loginInput
