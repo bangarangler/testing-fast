@@ -5,8 +5,8 @@ export const REST_BASE_ENDPOINT =
 
 export const URL =
   process.env.NODE_ENV === "production"
-    ? "hydra.nowigence.ai/api"
-    : "localhost:3000/api";
+    ? "hydra.nowigence.ai"
+    : "localhost:3000";
 
 export const GQL_ENDPOINT =
   process.env.NODE_ENV === "production"
