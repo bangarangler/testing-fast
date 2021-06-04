@@ -22,7 +22,8 @@ fastify.register(autoLoad, {
 // Route behind Authentication
 fastify.register(autoLoad, {
   dir: join(__dirname, "routes"),
-  dirNameRoutePrefix: false,
+  // dirNameRoutePrefix: true,
+  prefix: "/api",
 });
 // const context = async (args: any) => {
 //   console.log("args", args);
