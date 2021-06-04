@@ -100,10 +100,10 @@ const start = async () => {
     // @ts-ignore
     await httpServer.listen(process.env.HTTP_PORT || 5000, () => {
       console.log(
-        `Subscription ready at ws://${URL}:${process.env.HTTP_PORT}${server.subscriptionsPath}`
+        `Subscription ready at wss://${URL}:${process.env.HTTP_PORT}${server.subscriptionsPath}`
       );
       console.log(
-        `Server ready at http://${URL}:${process.env.HTTP_PORT}${server.graphqlPath}`
+        `Server ready at https://${URL}:${process.env.HTTP_PORT}${server.graphqlPath}`
       );
     });
     // await httpsServer.listen(process.env.HTTPS_PORT || 5000, () => {
