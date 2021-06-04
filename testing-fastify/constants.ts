@@ -72,4 +72,6 @@ export const log = {
 };
 
 export const URL =
-  process.env.NODE_ENV !== "production" ? "localhost" : "hydra.nowigence.ai";
+  process.env.NODE_ENV !== "production"
+    ? "localhost/api"
+    : "hydra.nowigence.ai/api";

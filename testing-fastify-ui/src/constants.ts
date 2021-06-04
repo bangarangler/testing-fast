@@ -5,7 +5,7 @@ export const REST_BASE_ENDPOINT =
 
 export const REST_BASE_ENDPOINT_CADDY =
   process.env.NODE_ENV === "production"
-    ? `https://hydra.nowigence.ai`
+    ? `https://hydra.nowigence.ai/api`
     : "http://localhost:5000";
 // :"https://fastify-auth.dev";
 
