@@ -20,8 +20,9 @@ export const __prod_cors__ =
     : {
         origin: [
           "https://studio.apollographql.com",
+          "https://hydra.nowigence.ai/graphql",
           "https://hydra.nowigence.ai/api",
-          "wss://hydra.nowigence.ai",
+          "wss://hydra.nowigence.ai/graphql",
         ],
         credentials: true,
       };

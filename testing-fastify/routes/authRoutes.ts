@@ -24,7 +24,7 @@ export default async function authRoutes(fastify: any, opts: any) {
         path: URL,
         domain: URL,
         httpOnly: true,
-        secure: true,
+        // secure: true,
         expires: refreshExp,
       })
       .send(`added new user`);
@@ -52,7 +52,7 @@ export default async function authRoutes(fastify: any, opts: any) {
           path: URL,
           domain: URL,
           httpOnly: true,
-          secure: true,
+          // secure: true,
           expires: refreshExp,
         })
         .send(res);
