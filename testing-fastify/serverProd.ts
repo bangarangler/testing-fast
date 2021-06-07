@@ -23,7 +23,7 @@ fastify.register(autoLoad, {
 fastify.register(autoLoad, {
   dir: join(__dirname, "routes"),
   // dirNameRoutePrefix: true,
-  // prefix: "/api",
+  prefix: "/api",
 });
 // const context = async (args: any) => {
 //   console.log("args", args);
