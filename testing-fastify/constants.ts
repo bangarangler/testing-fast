@@ -11,8 +11,8 @@ export const __prod_cors__ =
         origin: [
           "http://localhost:3000",
           "http://localhost:5000/api",
-          "http://localhost:5000/api/graphql",
-          "ws://localhost:5000/api/graphql",
+          "http://localhost:5000/graphql",
+          "ws://localhost:5000/graphql",
           "https://studio.apollographql.com",
         ],
         credentials: true,
@@ -20,9 +20,9 @@ export const __prod_cors__ =
     : {
         origin: [
           "https://studio.apollographql.com",
-          "https://hydra.nowigence.ai/api/graphql",
+          "https://hydra.nowigence.ai/graphql",
           "https://hydra.nowigence.ai/api",
-          "wss://hydra.nowigence.ai/api/graphql",
+          "wss://hydra.nowigence.ai/graphql",
         ],
         credentials: true,
       };
