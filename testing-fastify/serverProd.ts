@@ -76,7 +76,7 @@ const start = async () => {
       resolvers,
       context,
       playground: {
-        endpoint: "/graphql",
+        endpoint: "/api/graphql",
         settings: { "request.credentials": "include" },
       },
     });

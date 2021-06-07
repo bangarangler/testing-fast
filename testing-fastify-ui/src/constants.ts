@@ -10,10 +10,10 @@ export const URL =
 
 export const GQL_ENDPOINT =
   process.env.NODE_ENV === "production"
-    ? `https://hydra.nowigence.ai/graphql`
-    : "http://localhost:5000/graphql";
+    ? `https://hydra.nowigence.ai/api/graphql`
+    : "http://localhost:5000/api/graphql";
 
 export const GQL_SUBSCRIPTION_ENDPOINT =
   process.env.NODE_ENV === "production"
-    ? `wss://hydra.nowigence.ai/graphql`
-    : "ws://localhost:5000/graphql";
+    ? `wss://hydra.nowigence.ai/api/graphql`
+    : "ws://localhost:5000/api/graphql";
