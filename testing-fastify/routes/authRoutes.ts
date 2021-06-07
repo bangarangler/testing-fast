@@ -87,3 +87,5 @@ export default async function authRoutes(fastify: any, opts: any) {
     }
   });
 }
+
+export const autoPrefix = "/api";
