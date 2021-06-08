@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "tsc && node dist/serverProd.js",
+    "start": "tsc && NODE_ENV=production node dist/serverProd.js",
     "dev": "nodemon server.ts",
     "gen": "graphql-codegen --config codegen.yml",
     "gen-env": "npx gen-env-types .env -o ./.env.d.ts -e ."
