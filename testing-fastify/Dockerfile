@@ -12,7 +12,6 @@ RUN rm -rf dist
 
 RUN npm run build
 
-
 RUN cp -r ./graphql/types/ ./dist/graphql/
 
 EXPOSE 5000

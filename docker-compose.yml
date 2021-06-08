@@ -5,9 +5,23 @@ services:
       - fastify-redis
     build: ./testing-fastify
     ports:
-      - '5000:5000'
+      - "5000:5000"
     env_file:
       - ./testing-fastify/.env
+  fastify-frontend:
+    depends_on:
+      - fastify-backend
+    build: ./testing-fastify-ui
+    ports:
+      - "3000:3000"
+  # caddy:
+  #   image: caddy
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - /home/jon/Documents/web-dev/playground/testing-fast/Caddyfile:/etc/caddy/Caddyfile
   fastify-redis:
     image: "redis:alpine"
     command: redis-server
@@ -17,7 +31,6 @@ services:
       - REDIS_REPLICATION_MODE=master
     volumes:
       - /home/jonathan/Desktop/testing-fastify/redis-data:/var/lib/redis
-
 
 volumes:
   redis-data:
