@@ -86,20 +86,20 @@ const start = async () => {
     );
     if (!httpServer) throw "No HTTP SERVER";
     server.installSubscriptionHandlers(httpServer);
-    // await fastify.listen(process.env.PORT || 5000);
+    // await fastify.listen(process.env.DEV_PORT);
     // @ts-ignore
-    await httpServer.listen(process.env.PORT || 5000, () => {
+    await httpServer.listen(process.env.DEV_PORT, () => {
       console.log(
-        `Subscription ready at ws://${URL}:${process.env.PORT_DEV}${server.subscriptionsPath}`
+        `Subscription ready at ws://${URL}:${process.env.DEV_PORT}${server.subscriptionsPath}`
       );
       console.log(
-        `Server ready at http://${URL}:${process.env.PORT_DEV}${server.graphqlPath}`
+        `Server ready at http://${URL}:${process.env.DEV_PORT}${server.graphqlPath}`
       );
     });
 
     const address = fastify.server.address();
     const port = typeof address === "string" ? address : address?.port;
-    log.info(`Server started on port ${process.env.PORT}`);
+    // log.info(`Server started on port ${process.env.DEV_PORT}`);
     // log.warn("Warning");
     // log.err("ERROR!!");
     // throw "Error";

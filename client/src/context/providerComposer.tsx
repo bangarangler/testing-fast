@@ -1,5 +1,5 @@
 import React from "react";
-import { SubscriptionProvider } from "../context/allContext";
+import { SubscriptionProvider } from "./allContext";
 
 // @ts-ignore
 function ProviderComposer({ contexts, children }) {
