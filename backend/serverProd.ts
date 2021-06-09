@@ -87,14 +87,14 @@ const start = async () => {
         `Server ready at https://${URL}:${process.env.HTTPS_PORT}${server.graphqlPath}`
       );
     });
-    httpsServer.listen(process.env.PORT_HTTPS, () => {
-      console.log(
-        `HTTPS Subscription ready at wss://${URL}:${process.env.PORT_HTTPS}${server.subscriptionsPath}`
-      );
-      console.log(
-        `HTTPS Server ready at http://${URL}:${process.env.PORT_HTTPS}${server.graphqlPath}`
-      );
-    });
+    // httpsServer.listen(process.env.PORT_HTTPS, () => {
+    //   console.log(
+    //     `HTTPS Subscription ready at wss://${URL}:${process.env.PORT_HTTPS}${server.subscriptionsPath}`
+    //   );
+    //   console.log(
+    //     `HTTPS Server ready at http://${URL}:${process.env.PORT_HTTPS}${server.graphqlPath}`
+    //   );
+    // });
   } catch (err) {
     log.err("error: " + err);
     console.log("err", err);
