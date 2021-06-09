@@ -3,8 +3,12 @@
 package main
 
 import (
+	"bufio"
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/magefile/mage/mg" // mg contains helpful utility functions, like Deps
 	"github.com/magefile/mage/sh"
@@ -14,7 +18,50 @@ import (
 // If not set, running mage will list available targets
 // var Default = Build
 
-// A build step that requires additional params, or platform specific steps for example
+// Only Command needed to prep for deployment
+// Will install packages, run the build for both backend and client and move
+// dirs into backend so that your ready to go
+func PostBuild() error {
+	var err error
+	mg.Deps(CheckNVM)
+	mg.Deps(BuildBackend)
+	fmt.Println("running postBuild step... moving dirs around to prep for deployment...")
+	err = sh.Run("cp", "-r", "./backend/graphql/types/", "./backend/dist/graphql/")
+	err = sh.Run("cp", "-r", "./client/build", "./backend/")
+	return err
+}
+
+// runs and displays your node version. insert it without the v for now, will
+// stop if it's not a match with the .nvmrc
+func CheckNVM() error {
+	sh.Run("node", "-v")
+	fmt.Print("enter the node version: ")
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("An error occured while reading input.")
+		return err
+	}
+	input = strings.TrimSuffix(input, "\n")
+	fmt.Println("input", input)
+
+	b, err := ioutil.ReadFile(".nvmrc")
+	if err != nil {
+		fmt.Println("err reading .nvmrc", err)
+		return err
+	}
+	// fmt.Println("bytes", b)
+	str := string(b)
+	fmt.Println("str", str)
+
+	if str != input {
+		fmt.Println("You need to change your node version before continuing...")
+		return errors.New("Cancel!")
+	}
+	return err
+}
+
+// Install packages for backend and frontend
 func InstallAll() error {
 	var err error
 	mg.Deps(InstallClient)
@@ -26,7 +73,7 @@ func InstallAll() error {
 	return err
 }
 
-// Manage your deps, or running package managers.
+// install packages for client only
 func InstallClient() error {
 	fmt.Println("Installing packages for client...")
 	os.Chdir("./client")
@@ -35,6 +82,7 @@ func InstallClient() error {
 	return err
 }
 
+// build client -> will install first
 func BuildClient() error {
 	mg.Deps(InstallAll)
 	fmt.Println("running npm run build for client...")
@@ -44,6 +92,7 @@ func BuildClient() error {
 	return err
 }
 
+// build backend -> will install client first and backend
 func BuildBackend() error {
 	mg.Deps(BuildClient)
 	fmt.Println("running npm run build for backend...")
@@ -53,16 +102,8 @@ func BuildBackend() error {
 	return err
 }
 
-func PostBuild() error {
-	var err error
-	mg.Deps(BuildBackend)
-	fmt.Println("running postBuild step... moving dirs around to prep for deployment...")
-	err = sh.Run("cp", "-r", "./backend/graphql/types/", "./backend/dist/graphql/")
-	err = sh.Run("cp", "-r", "./client/build", "./backend/")
-	return err
-}
-
-// Clean up after yourself
+// Remove all node_modules from backend and client and removes build dirs and
+// dist dirs
 func Clean() error {
 	var err error
 	fmt.Println("Cleaning...")
