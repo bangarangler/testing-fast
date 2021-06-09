@@ -14,6 +14,7 @@ import { ServerContext } from "./serverContext";
 import { User } from "./codeGenBE";
 import Redis from "ioredis";
 import { RedisPubSub } from "graphql-redis-subscriptions";
+import path from "path";
 
 fastify.register(autoLoad, {
   dir: join(__dirname, "plugins"),
@@ -24,6 +25,16 @@ fastify.register(autoLoad, {
   dir: join(__dirname, "routes"),
   // dirNameRoutePrefix: true,
   // prefix: "/api",
+});
+
+fastify.register(require("fastify-static"), {
+  root: path.join(__dirname, "public"),
+  prefix: "/public/", // optional: default '/'
+});
+
+fastify.get("/*", function (req, reply) {
+  // @ts-ignore
+  return reply.sendFile("index.html");
 });
 
 // const context = async (args: any) => {

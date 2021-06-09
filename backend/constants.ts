@@ -5,6 +5,7 @@ import helmet from "fastify-helmet";
 import cookie, { FastifyCookieOptions } from "fastify-cookie";
 import fastifyMongodb from "fastify-mongodb";
 import csrf from "fastify-csrf";
+import path from "path";
 export const __prod_cors__ =
   process.env.NODE_ENV !== "production"
     ? {
