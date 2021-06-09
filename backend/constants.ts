@@ -1,10 +1,11 @@
-import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
-import fastifyLog from "fastify-log";
-import fastifyCors from "fastify-cors";
-import helmet from "fastify-helmet";
+import Fastify, { FastifyInstance } from "fastify";
 import cookie, { FastifyCookieOptions } from "fastify-cookie";
-import fastifyMongodb from "fastify-mongodb";
+import fastifyCors from "fastify-cors";
 import csrf from "fastify-csrf";
+import helmet from "fastify-helmet";
+import fastifyLog from "fastify-log";
+import fastifyMongodb from "fastify-mongodb";
+import fs, { readFileSync } from "fs";
 export const __prod_cors__ =
   process.env.NODE_ENV !== "production"
     ? {
@@ -36,6 +37,20 @@ interface OurFastifyInstance extends FastifyInstance {
 }
 
 export const fastify: OurFastifyInstance = Fastify();
+
+//@ts-ignore
+export const fastifyProd: OurFastifyInstance = Fastify({
+  //@ts-ignore
+  https: {
+    allowHTTP1: true,
+    key: readFileSync(
+      `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/privkey.pem`
+    ),
+    cert: readFileSync(
+      `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/cert.pem`
+    ),
+  },
+});
 
 //! Make sure to change these for our production app
 const corsConfig = __prod_cors__;
