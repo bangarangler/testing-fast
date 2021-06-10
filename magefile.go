@@ -171,7 +171,7 @@ func DockerBuildBackendProd() error {
 	fmt.Println("docker build backend production...")
 	os.Chdir("./backend")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-backend-prod:prod", "-f", "Dockerfile", ".")
+	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-backend-prod:prod", "-f", "Dockerfile", ".")
 	return err
 }
 
@@ -180,6 +180,6 @@ func DockerBuildClientProd() error {
 	fmt.Println("docker build client production...")
 	os.Chdir("./client")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-frontend-prod:prod", "-f", "Dockerfile", ".")
+	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-frontend-prod:prod", "-f", "Dockerfile", ".")
 	return err
 }
