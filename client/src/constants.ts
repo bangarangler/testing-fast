@@ -6,6 +6,7 @@ export const REST_BASE_ENDPOINT =
 //   ? `https://hydra.nowigence.ai/api`
 //   : "http://fastify-backend:5000/api";
 
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const URL =
   process.env.NODE_ENV === "production"
     ? "hydra.nowigence.ai"

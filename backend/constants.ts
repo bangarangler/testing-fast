@@ -18,9 +18,11 @@ export const __prod_cors__ =
           "http://fastify-frontend:3000",
           "http://fastify-backend:5000/api",
           "http://fastify-backend:5000/graphql",
+          "http://fastify-backend:5000",
           "ws://fastify-backend:5000/graphql",
         ],
         credentials: true,
+        methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
       }
     : {
         origin: [
@@ -30,6 +32,7 @@ export const __prod_cors__ =
           "wss://hydra.nowigence.ai/graphql",
         ],
         credentials: true,
+        methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
       };
 
 interface OurFastifyInstance extends FastifyInstance {
@@ -40,7 +43,7 @@ interface OurFastifyInstance extends FastifyInstance {
   };
 }
 
-export const fastify: OurFastifyInstance = Fastify();
+const fastify: OurFastifyInstance = Fastify();
 
 //@ts-ignore
 // export const fastifyProd: OurFastifyInstance = Fastify({
@@ -58,7 +61,9 @@ export const fastify: OurFastifyInstance = Fastify();
 
 //! Make sure to change these for our production app
 const corsConfig = __prod_cors__;
-fastify.register(fastifyCors, corsConfig);
+console.log("corsConfig", corsConfig);
+// fastify.register(fastifyCors, corsConfig);
+fastify.register(fastifyCors, { origin: "*" });
 // console.log("fastifyCors", fastifyCors);
 fastify.register(helmet, {});
 
@@ -93,3 +98,5 @@ export const log = {
 
 export const URL =
   process.env.NODE_ENV !== "production" ? "localhost" : "hydra.nowigence.ai";
+
+export { fastify };
