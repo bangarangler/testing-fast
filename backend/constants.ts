@@ -60,8 +60,8 @@ const fastify: OurFastifyInstance = Fastify();
 // });
 
 //! Make sure to change these for our production app
-const corsConfig = __prod_cors__;
-console.log("corsConfig", corsConfig);
+// const corsConfig = __prod_cors__;
+// console.log("corsConfig", corsConfig);
 // fastify.register(fastifyCors, corsConfig);
 fastify.register(fastifyCors, { origin: "*" });
 // console.log("fastifyCors", fastifyCors);

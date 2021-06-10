@@ -1,7 +1,7 @@
 version: "3"
 services:
   fastify-backend:
-    image: bangarangler/fastify-backend-prod:${ENV}
+    image: bangarangler/fastify-backend-prod:prod
     depends_on:
       - fastify-redis
     networks:
@@ -9,11 +9,10 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      # - ./backend/.env
-      - ./backend/config/${ENV}.env
+      - ./backend/.env
     restart: unless-stopped
   fastify-frontend:
-    image: bangarangler/fastify-frontend-prod:${ENV}
+    image: bangarangler/fastify-frontend-prod:prod
     depends_on:
       - fastify-backend
     restart: unless-stopped
@@ -22,14 +21,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-  # caddy:
-  #   image: caddy
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - /home/jon/Documents/web-dev/playground/testing-fast/Caddyfile:/etc/caddy/Caddyfile
   fastify-redis:
     image: "redis:alpine"
     command: redis-server

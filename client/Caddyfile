@@ -1,9 +1,9 @@
-http://localhost:80 {
+hydra.nowigence.ai:443 {
   root * /client
   route {
    reverse_proxy /api/* fastify-backend:5000
    reverse_proxy /graphql fastify-backend:5000
-   try_files {path} {path}/ /index.html
+   try_files {path} /index.html
    file_server
   }
 }

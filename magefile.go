@@ -124,7 +124,7 @@ func DockerBuildBackendDev() error {
 	fmt.Println("docker build backend")
 	os.Chdir("./backend")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-backend", ".")
+	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-backend", ".")
 	return err
 }
 
@@ -133,42 +133,35 @@ func DockerBuildClientDev() error {
 	fmt.Println("docker build client")
 	os.Chdir("./client")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-client", ".")
+	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-frontend", ".")
 	return err
 }
 
 // Docker Compose Up
 func UpDev() error {
-	fmt.Println("Spinning up project local...")
-	err := sh.Run("ENV=local", "docker-compose", "-f", "docker-compose-dev.yml", "up", "-d")
+	fmt.Println("Spinning up project dev...")
+	err := sh.Run("docker-compose", "up", "-d")
 	return err
 }
 
 // Docker Compose Up Prod
 func UpProd() error {
 	fmt.Println("Spinning up project prod...")
-	err := sh.Run("ENV=prod", "docker-compose", "-f", "docker-compose-prod.yml", "up", "-d")
+	err := sh.Run("docker-compose", "up", "-d")
 	return err
 }
 
-// Docker Compose Up Local
-func UpLocal() error {
-	fmt.Println("Spinning up project local...")
-	err := sh.Run("ENV=local docker-compose", "-f", "docker-compose-prod.yml", "up", "-d")
-	return err
-}
-
-// Docker Compose Down Local
-func Down() error {
-	fmt.Println("Spinning down project...")
+// Docker Compose Down Prod
+func DownProd() error {
+	fmt.Println("Spinning down project prod...")
 	err := sh.Run("docker-compose", "down")
 	return err
 }
 
-// Docker Compose Down Local
-func DownLocal() error {
-	fmt.Println("Spinning down project local...")
-	err := sh.Run("docker-compose", "-f", "docker-compose-prod.yml", "down")
+// Docker Compose Down Dev
+func DownDev() error {
+	fmt.Println("Spinning down project dev...")
+	err := sh.Run("docker-compose", "down")
 	return err
 }
 
@@ -178,7 +171,7 @@ func DockerBuildBackendProd() error {
 	fmt.Println("docker build backend production...")
 	os.Chdir("./backend")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-backend-prod:prod", "-f", "Dockerfile.prod", ".")
+	err := sh.Run("docker", "build", "-t", "fastify-backend-prod:prod", "-f", "Dockerfile", ".")
 	return err
 }
 
@@ -187,25 +180,6 @@ func DockerBuildClientProd() error {
 	fmt.Println("docker build client production...")
 	os.Chdir("./client")
 	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "fastify-frontend-prod:prod", "--build-arg", "CADDYFILE=./client/CADDYFILE.prod", "--build-arg", "BASE_URL=https://hydra.nowigence.ai/api", "-f", "Dockerfile.prod", ".")
-	return err
-}
-
-// Docker build client production:local
-func LocalDockerBuildClientProd() error {
-	fmt.Println("docker build client production:local...")
-	os.Chdir("./client")
-	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-frontend-prod:local", "--build-arg", "CADDYFILE=Caddyfile.local", "--build-arg", "BASE_URL=http://localhost:5000/api", "-f", "Dockerfile.prod", ".")
-	return err
-}
-
-// Docker build backend production:local
-func LocalDockerBuildBackendProd() error {
-	mg.Deps(LocalDockerBuildClientProd)
-	fmt.Println("docker build backend production:local...")
-	os.Chdir("./backend")
-	defer os.Chdir("..")
-	err := sh.Run("docker", "build", "-t", "bangarangler/fastify-backend-prod:local", "-f", "Dockerfile.prod", ".")
+	err := sh.Run("docker", "build", "-t", "fastify-frontend-prod:prod", "-f", "Dockerfile", ".")
 	return err
 }

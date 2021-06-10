@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16 AS builder
 
 WORKDIR /client
 
@@ -9,10 +9,15 @@ RUN npm install
 
 COPY . .
 
-# RUN npm run build
+RUN npm run build
 
-EXPOSE 3000
+# EXPOSE 3000
 
-ENV REACT_APP_BASE_URL=http://localhost:5000/api
+# CMD ["npm", "start"]
 
-CMD ["npm", "start"]
+FROM caddy
+COPY --from=builder /client/build/ /client
+
+EXPOSE 80
+
+EXPOSE 443
