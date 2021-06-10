@@ -1,0 +1,26 @@
+FROM node:16 AS builder
+
+WORKDIR /client
+
+COPY ./package.json .
+COPY ./package-lock.json .
+
+RUN npm install
+
+COPY . .
+
+ARG BASE_URL
+ENV REACT_APP_BASE_URL=${BASE_URL}
+
+RUN npm run build
+
+FROM caddy
+
+ARG CADDYFILE
+COPY ${CADDYFILE} /etc/caddy/Caddyfile
+
+COPY --from=builder /client/build/ /client
+
+EXPOSE 80
+
+EXPOSE 443
