@@ -117,3 +117,35 @@ func Clean() error {
 	defer os.Chdir("..")
 	return err
 }
+
+// Docker build backend
+func DockerBuildBackend() error {
+	fmt.Println("docker build backend")
+	os.Chdir("./backend")
+	defer os.Chdir("..")
+	err := sh.Run("docker", "build", "-t", "fastify-backend", ".")
+	return err
+}
+
+// Docker build backend
+func DockerBuildClient() error {
+	fmt.Println("docker build client")
+	os.Chdir("./client")
+	defer os.Chdir("..")
+	err := sh.Run("docker", "build", "-t", "fastify-client", ".")
+	return err
+}
+
+// Docker Compose Up
+func Up() error {
+	fmt.Println("Spinning up project...")
+	err := sh.Run("docker-compose", "up", "-d")
+	return err
+}
+
+// Docker Compose Down
+func Down() error {
+	fmt.Println("Spinning down project...")
+	err := sh.Run("docker-compose", "down")
+	return err
+}

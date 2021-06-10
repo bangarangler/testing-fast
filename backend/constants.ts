@@ -15,6 +15,10 @@ export const __prod_cors__ =
           "http://localhost:5000/graphql",
           "ws://localhost:5000/graphql",
           "https://studio.apollographql.com",
+          "http://fastify-frontend:3000",
+          "http://fastify-backend:5000/api",
+          "http://fastify-backend:5000/graphql",
+          "ws://fastify-backend:5000/graphql",
         ],
         credentials: true,
       }
@@ -39,18 +43,18 @@ interface OurFastifyInstance extends FastifyInstance {
 export const fastify: OurFastifyInstance = Fastify();
 
 //@ts-ignore
-export const fastifyProd: OurFastifyInstance = Fastify({
-  //@ts-ignore
-  https: {
-    allowHTTP1: true,
-    key: readFileSync(
-      `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/privkey.pem`
-    ),
-    cert: readFileSync(
-      `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/cert.pem`
-    ),
-  },
-});
+// export const fastifyProd: OurFastifyInstance = Fastify({
+//   //@ts-ignore
+//   https: {
+//     allowHTTP1: true,
+//     key: readFileSync(
+//       `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/privkey.pem`
+//     ),
+//     cert: readFileSync(
+//       `/etc/letsencrypt/live/${process.env.SUBDOMAIN}.nowigence.ai/cert.pem`
+//     ),
+//   },
+// });
 
 //! Make sure to change these for our production app
 const corsConfig = __prod_cors__;

@@ -1,6 +1,6 @@
 import dotenv from "dotenv-safe";
 dotenv.config();
-import { fastify, fastifyProd, log, URL } from "./constants";
+import { fastify, log, URL } from "./constants";
 import Fastify, { FastifyInstance } from "fastify";
 import autoLoad from "fastify-autoload";
 import fs from "fs";
@@ -16,14 +16,14 @@ import { User } from "./codeGenBE";
 import Redis from "ioredis";
 import { RedisPubSub } from "graphql-redis-subscriptions";
 
-const whichFastify = process.env.TEST_SERVER === "true" ? fastifyProd : fastify;
+// const whichFastify = process.env.TEST_SERVER === "true" ? fastifyProd : fastify;
 
-whichFastify.register(autoLoad, {
+fastify.register(autoLoad, {
   dir: join(__dirname, "plugins"),
 });
 
 // Route behind Authentication
-whichFastify.register(autoLoad, {
+fastify.register(autoLoad, {
   dir: join(__dirname, "routes"),
 });
 
@@ -54,7 +54,7 @@ const context = async ({ request, reply, connection }: ServerContext) => {
     console.log("err", err);
   }
   // return { request, reply, fastify, db: fastify?.mongo?.db };
-  return { request, reply, db: whichFastify?.mongo?.db, connection, pubsub };
+  return { request, reply, db: fastify?.mongo?.db, connection, pubsub };
 };
 
 const start = async () => {
@@ -70,10 +70,10 @@ const start = async () => {
     });
 
     await server.start();
-    const httpServer = await whichFastify.register(
+    const httpServer = await fastify.register(
       server.createHandler({ cors: false })
     );
-    // const httpsServer = await whichFastify.register(server.createHandler({cors: false, }))
+    // const httpsServer = await fastify.register(server.createHandler({cors: false, }))
 
     if (!httpServer) throw "No HTTP SERVER";
     server.installSubscriptionHandlers(httpServer);
