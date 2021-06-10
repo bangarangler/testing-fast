@@ -3,7 +3,6 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -34,25 +33,24 @@ func PostBuild() error {
 // runs and displays your node version. insert it without the v for now, will
 // stop if it's not a match with the .nvmrc
 func CheckNVM() error {
-	sh.Run("node", "-v")
-	fmt.Print("enter the node version: ")
-	reader := bufio.NewReader(os.Stdin)
-	input, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Println("An error occured while reading input.")
-		return err
-	}
-	input = strings.TrimSuffix(input, "\n")
-	fmt.Println("input", input)
+	rescueStdout := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+	sh.Run("node", "-v") // print node version to console
+	w.Close()
+	out, _ := ioutil.ReadAll(r)
+	os.Stdout = rescueStdout
+
+	input := string(out[1:])                // remove the v
+	input = strings.TrimSuffix(input, "\n") // remove the \n so the bytes are a match further down
 
 	b, err := ioutil.ReadFile(".nvmrc")
 	if err != nil {
 		fmt.Println("err reading .nvmrc", err)
 		return err
 	}
-	// fmt.Println("bytes", b)
 	str := string(b)
-	fmt.Println("str", str)
+	fmt.Println("Checking Node Version for match with .nvmrc", str+"=="+input+"?")
 
 	if str != input {
 		fmt.Println("You need to change your node version before continuing...")
