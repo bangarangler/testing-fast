@@ -18,15 +18,29 @@ import (
 // var Default = Build
 
 // Only Command needed to prep for deployment
-// Will install packages, run the build for both backend and client and move
-// dirs into backend so that your ready to go
+// Will install packages, run the build for both backend and client and start
+// both backend api's with pm2 plus reload caddy
+func StartProd() error {
+	var err error
+	mg.Deps(PostBuild)
+	fmt.Println("Starting up Production...")
+	os.Chdir("./backend")
+	err = sh.Run("pm2", "start", "npm", "--name", "'prod1'", "--", "run", "start")
+	err = sh.Run("pm2", "start", "npm", "--name", "'prod2'", "--", "run", "start1")
+	os.Chdir("../client")
+	fmt.Println("Reloading Caddy...")
+	err = sh.Run("caddy", "reload", "--config", "./Caddyfile")
+	defer os.Chdir("..")
+	return err
+}
+
 func PostBuild() error {
 	var err error
 	mg.Deps(CheckNVM)
 	mg.Deps(BuildBackend)
 	fmt.Println("running postBuild step... moving dirs around to prep for deployment...")
 	err = sh.Run("cp", "-r", "./backend/graphql/types/", "./backend/dist/graphql/")
-	err = sh.Run("cp", "-r", "./client/build", "./backend/")
+	// err = sh.Run("cp", "-r", "./client/build", "./backend/")
 	return err
 }
 

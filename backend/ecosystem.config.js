@@ -1,0 +1,52 @@
+module.exports = {
+  apps: [
+    {
+      name: "node:5000",
+      cwd: ".",
+      script: "npm",
+      args: "start",
+      watch: false,
+      autorestart: true,
+      env: {
+        HTTPS_PORT: 5000,
+        NODE_ENV: "production1",
+        // SUBDOMAIN: "app",
+        // USERNAME: "nowigencefirebase@gmail.com",
+        // PASSWORD: "LhfJ9uZtmp",
+        // TEST_SERVER: false,
+      },
+      env_testing: {
+        HTTPS_PORT: 8080,
+        NODE_ENV: "production2",
+        // SUBDOMAIN: "nodereacttesting",
+        // USERNAME: "nowigencefirebase@gmail.com",
+        // PASSWORD: "LhfJ9uZtmp",
+        // TEST_SERVER: true,
+      },
+      // env_orion: {
+      //   PORT: 80,
+      //   NODE_ENV: "orion",
+      //   SUBDOMAIN: "hydra",
+      //   USERNAME: "nowigencefirebase@gmail.com",
+      //   PASSWORD: "LhfJ9uZtmp",
+      //   TEST_SERVER: true,
+      // },
+      // env_maverick: {
+      //   PORT: 80,
+      //   NODE_ENV: "maverick",
+      //   SUBDOMAIN: "maverick",
+      //   USERNAME: "nowigencefirebase@gmail.com",
+      //   PASSWORD: "LhfJ9uZtmp",
+      //   TEST_SERVER: true,
+      // },
+    },
+    // {
+    //   name: "react",
+    //   cwd: "./client",
+    //   script: "npm",
+    //   args: "start",
+    //   watch: false,
+    //   autorestart: true,
+    // },
+  ],
+};
